@@ -1,0 +1,17 @@
+universe = vanilla
+executable = job.sh
+arguments = $(Process)
+
+output = output/analysis_$(Process).out
+error = output/analysis_$(Process).err
+log = output/analysis.log
+
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+
+request_cpus = 1
+request_memory = 4GB
+request_disk = 10GB
+
+queue 1
+
