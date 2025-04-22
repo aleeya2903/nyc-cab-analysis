@@ -1,0 +1,60 @@
+# Title: Analysis of NYC Taxi Trip Patterns
+
+### Introduction: 
+
+This project aims to analyze New York City taxi trip data to uncover patterns in trip durations, fare amounts, and popular pickup and drop-off locations..
+
+### Data Source: 
+
+The dataset comprises approximately 29 GB of detailed taxi trip records. We will just be looking at yellow taxi records from 2009 to 2025: https://www.kaggle.com/datasets/marcbrandner/tlc-trip-record-data-yellow-taxi?select=data_dictionary_trip_records_yellow.pdf
+
+### Variables:
+
+tpep_pickup_datetime: Timestamp of trip start 
+
+tpep_dropoff_datetime: Timestamp of trip end 
+
+fare_amount: Cost of the trip
+
+trip_distance: Distance traveled
+
+total_amount: Total cost including surcharges and taxes
+
+passenger_count: Number of passengers
+
+PULocationID: Pickup location identifier
+
+DOLocationID: Drop-off location identifier
+
+
+```{r}
+#this is for one year's dataset
+library(arrow)
+df <- read_parquet('yellow_tripdata_2025-01.parquet')
+```
+
+### Statistical Analysis:
+
+Calculate trip duration(difference between drop-off and pickup times).
+Define rush hours (e.g., 6–9 AM and 4–7 PM) and create a binary variable indicating rush hour trips.
+
+Compare average trip durations and fare amounts between rush hour and non-rush hour periods using t-tests.
+Perform regression analysis to assess the impact of trip distance and rush hour on trip duration and fare.
+ 
+We also hypothesize: Are taxi trips in Manhattan shorter but more expensive compared to other boroughs? We can use ANOVA or t-test.
+
+
+Identify and visualize popular pickup and drop-off locations using the TLC maps, sf and ggplot2 packages.
+Create heatmaps to represent high-demand areas during different times.
+
+### Computational Tools:
+
+Data Processing: dplyr and data.table
+
+Parallel Computing: Utilize HPC clusters like CHTC or slurm
+
+Visualization: ggplot2 for plots, leaflet for interactive maps
+
+### GitHub: https://github.com/NurArsani/Project
+
+
