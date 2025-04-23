@@ -1,6 +1,6 @@
 # Analyze.sub
 Universe        = vanilla
-Executable      = /home/groups/STAT_DSCP/group13_2025/analyze_taxi_data.R
+Executable      = /home/groups/STAT_DSCP/group13_2025/Analyze.R
 ShouldTransferFiles = YES
 WhenToTransferOutput = ON_EXIT
 
