@@ -1,4 +1,3 @@
-# Analyze.sub
 Universe        = vanilla
 Executable      = /home/groups/STAT_DSCP/group13_2025/Analyze.R
 ShouldTransferFiles = YES
@@ -9,8 +8,8 @@ Arguments       = $(INFILE) $(OUTFILE) $(ZONES)
 
 # resource requests
 request_cpus    = 1
-request_memory  = 4 GB
-request_disk    = 5 GB    # <— required by this pool
+request_memory  = 4GB
+request_disk    = 5GB    
 
 # logging
 Log             = logs/$(YEAR)-$(MM).log
