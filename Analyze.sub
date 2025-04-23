@@ -1,28 +1,32 @@
+# Analyze.sub
 Universe        = vanilla
-Executable      = /home/groups/STAT_DSCP/group13_2025/Analyze.R
+Executable      = /home/groups/STAT_DSCP/group13_2025/analyze_taxi_data.R
 ShouldTransferFiles = YES
 WhenToTransferOutput = ON_EXIT
 
-# three args: inparquet, out.rds, zones.csv
+# pass exactly three args:
 Arguments       = $(INFILE) $(OUTFILE) $(ZONES)
 
+# resource requests
+request_cpus    = 1
+request_memory  = 4 GB
+request_disk    = 5 GB    # <— required by this pool
+
+# logging
 Log             = logs/$(YEAR)-$(MM).log
 Output          = logs/$(YEAR)-$(MM).out
 Error           = logs/$(YEAR)-$(MM).err
 
-RequestCpus     = 1
-RequestMemory   = 4 GB
-RequestDisk     = 4 GB
-
-# zone lookup file is small; can transfer it each job
+# fixed small file to transfer each time
 ZONES           = /home/groups/STAT_DSCP/group13_2025/taxi_zones.csv
 
+# per‐job inputs/outputs
 INFILE          = /staging/groups/STAT_DSCP/group13_2025/\
 yellow_tripdata_$(YEAR)-$(MM).parquet
-
 OUTFILE         = /home/groups/STAT_DSCP/group13_2025/results/\
 summary_$(YEAR)-$(MM).rds
 
+# one job per year‐month
 Queue YEAR, MM from (
   2009 01
   2009 02
