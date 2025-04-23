@@ -1,5 +1,5 @@
 #!/bin/bash
-# process_local_parquet.sh
+# job.sh
 
 set -e
 
