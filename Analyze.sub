@@ -1,34 +1,30 @@
-Universe        = vanilla
-Executable      = /home/groups/STAT_DSCP/group13_2025/Analyze.R
-ShouldTransferFiles = YES
-WhenToTransferOutput = ON_EXIT
+# Analyze.sub
+Universe               = vanilla
+Executable             = run_analysis.sh
+should_transfer_files  = YES
+when_to_transfer_output= ON_EXIT
+transfer_input_files   = $(ParquetFile), \
+  run_analysis.sh, \
+  Analyze.R, \
+  taxi_zones.csv
+transfer_output_files = results
+# Container specification
+container_image        = osdf:///ospool/uc-shared/public/OSG-Staff/xalim_stat/R_tidyverse_FITSio.sif
 
-# pass exactly three args:
-Arguments       = $(INFILE) $(OUTFILE) $(ZONES)
+RequestCpus            = 1
+RequestMemory          = 4GB
+RequestDisk            = 5GB    
 
-# resource requests
-request_cpus    = 1
-request_memory  = 4GB
-request_disk    = 5GB    
+Log                    = ./logs/$(ParquetFile:t:r).log
+Output                 = ./logs/$(ParquetFile:t:r).out
+Error                  = ./logs/$(ParquetFile:t:r).err
 
-# logging
-Log             = logs/$(YEAR)-$(MM).log
-Output          = logs/$(YEAR)-$(MM).out
-Error           = logs/$(YEAR)-$(MM).err
+ResultsDir             = ./results
 
-# fixed small file to transfer each time
-ZONES           = /home/groups/STAT_DSCP/group13_2025/taxi_zones.csv
+Arguments              = \
+  $(ParquetFile) \
+  $(ResultsDir)/$(ParquetFile:t:r).rds \
+  taxi_zones.csv
 
-# per‐job inputs/outputs
-INFILE          = /staging/groups/STAT_DSCP/group13_2025/\
-yellow_tripdata_$(YEAR)-$(MM).parquet
-OUTFILE         = /home/groups/STAT_DSCP/group13_2025/results/\
-summary_$(YEAR)-$(MM).rds
+Queue ParquetFile from parquet.txt
 
-# one job per year‐month
-Queue YEAR, MM from (
-  2009 01
-  2009 02
-  …
-  2025 12
-)
